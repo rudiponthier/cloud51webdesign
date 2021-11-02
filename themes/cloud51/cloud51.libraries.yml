@@ -1,0 +1,18 @@
+global-styling:
+  version: VERSION
+  css:
+    theme:
+      css/reset.css: {}
+      css/screen.css: {}
+
+global-scripts:
+  js:
+    js/cloud51.js: {}
+  dependencies:
+    - core/jquery
+    
+fonts:
+  css:
+    theme:
+      '//fonts.googleapis.com/css?family=Roboto+Slab:300,400': { type: external, minified: true }
+      '//fonts.googleapis.com/css?family=Krub:300,400': { type: external, minified: true }

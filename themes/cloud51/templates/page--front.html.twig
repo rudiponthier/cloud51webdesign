@@ -1,0 +1,128 @@
+<div class="container front">
+
+  <header class="header" role="banner">
+
+    <div id="wrapper-header-top" class="wrapper">
+        {% if page.header_top %}
+        <div class="header-top">
+            {{ page.header_top }}
+        </div>
+        {% endif %}
+    </div>
+
+    <div id="wrapper-header-nav"  class="wrapper">
+      <div class="header-nav">
+        <div class="header-brand">
+          {{ page.header}}
+        </div>
+        <nav class="nav-menu">
+          {{ page.primary_menu }}
+        </nav>
+        
+      </div>
+    </div>
+
+    <section id="sidr-container" class="sidr-container" role="contentinfo">
+      {{ page.sidr_container }}
+    </section>
+    
+  </header>
+
+  {% block content %}
+  <main role="main" class="main">
+
+    <div id="wrapper-headline" class="wrapper">
+      {{ page.headline }}
+    </div>
+    <div id="wrapper-title-bar" class="wrapper">
+      {{ page.title_bar }}
+    </div>
+    <div id="wrapper-breadcrumb" class="wrapper">
+      {{ page.breadcrumb }}
+    </div>
+    <div id="wrapper-highlighted" class="wrapper">
+      {{ page.highlighted }}
+    </div>
+    <div id="wrapper-before-content" class="wrapper">
+      {{ page.before_content }}
+    </div>
+
+    <div id="wrapper-content" class="wrapper">
+      <div id="content" class="content">
+        <div>
+
+          {% if page.sidebar_first %}
+            <aside class="sidebar-first" role="complementary">
+              {{ page.sidebar_first }}
+            </aside>
+          {% endif %}
+
+          {% if page.sidebar_second and page.sidebar_first %}
+            <!-- {% set col_class = 'col-md-6' %} -->
+          {% elseif page.sidebar_second or page.sidebar_first %}
+            <!-- {% set col_class = 'col-md-9' %} -->
+          {% else %}
+            <!-- {% set col_class = 'col-md-12' %} -->
+          {% endif %}
+
+          <div>
+            {{ page.content }}
+          </div>
+
+          {% if page.sidebar_second %}
+            <aside class="sidebar-second" role="complementary">
+              {{ page.sidebar_second }}
+            </aside>
+          {% endif %}
+
+        </div>
+      </div>
+    </div>
+
+    <div id="wrapper-after-content" class="wrapper">
+      {{ page.after_content }}
+    </div>
+
+    <div id="wrapper-full-width" class="wrapper">
+      {{ page.full_width }}
+    </div>
+    
+  </main>
+  {% endblock %}
+
+  <footer id="footer" role="contentinfo">
+    <div id="wrapper-main-footer" class="wrapper">
+      <div id="main-footer">
+          <div id="footer-first">
+            {{ page.footer_first }}
+          </div>
+
+          <div id="footer-second">
+            {{ page.footer_second }}
+          </div>
+
+          <div id="footer-third">
+            {{ page.footer_third }}
+          </div>
+
+      </div>
+    </div>
+
+
+    <div id="wrapper-footer-copyright" class="wrapper">
+      <div id="footer-copyright">
+
+            <div>
+              {{ page.footer_bottom_left }}
+            </div>
+
+            <div>
+              {{ page.footer_bottom_right }}
+            </div>
+            
+      </div>
+    </div>
+
+  </footer>
+
+</div>
