@@ -143,7 +143,8 @@ class OptionsLimitWebformHandler extends WebformHandlerBase implements WebformOp
    * {@inheritdoc}
    */
   public function getSummary() {
-    $settings = $this->getSettings();
+    $configuration = $this->getConfiguration();
+    $settings = $configuration['settings'];
 
     $element = $this->getWebform()->getElement($settings['element_key']);
     if ($element) {
@@ -1103,8 +1104,8 @@ class OptionsLimitWebformHandler extends WebformHandlerBase implements WebformOp
     foreach ($handlers as $handler) {
       if ($handler instanceof WebformOptionsLimitHandlerInterface
         && $handler->getHandlerId() !== $this->getHandlerId()) {
-        $element_key = $handler->getSetting('element_key');
-        unset($options[$element_key]);
+        $configuration = $handler->getConfiguration();
+        unset($options[$configuration['settings']['element_key']]);
       }
     }
 

@@ -172,13 +172,4 @@ class EntityAutocomplete extends WebformElementBase implements WebformElementEnt
     }
   }
 
-  /**
-   * {@inheritdoc}
-   */
-  public function getExportDefaultOptions() {
-    return [
-      'entity_reference_items' => ['id', 'title', 'url'],
-    ];
-  }
-
 }

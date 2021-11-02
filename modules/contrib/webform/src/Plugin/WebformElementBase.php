@@ -16,7 +16,6 @@ use Drupal\Core\Security\TrustedCallbackInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
-use Drupal\webform\Cache\WebformBubbleableMetadata;
 use Drupal\webform\Element\WebformCompositeFormElementTrait;
 use Drupal\webform\Element\WebformHtmlEditor;
 use Drupal\webform\Element\WebformMessage;
@@ -956,8 +955,6 @@ class WebformElementBase extends PluginBase implements WebformElementInterface, 
    * {@inheritdoc}
    */
   public function replaceTokens(array &$element, EntityInterface $entity = NULL) {
-    $bubbleable_metadata = new WebformBubbleableMetadata();
-
     foreach ($element as $key => $value) {
       // Only replace tokens in properties.
       if (Element::child($key)) {
@@ -969,11 +966,8 @@ class WebformElementBase extends PluginBase implements WebformElementInterface, 
         continue;
       }
 
-      $element[$key] = $this->tokenManager->replace($value, $entity, [], [], $bubbleable_metadata);
+      $element[$key] = $this->tokenManager->replaceNoRenderContext($value, $entity);
     }
-
-    // Append metadata to the element's #cache property.
-    $bubbleable_metadata->appendTo($element);
   }
 
   /**

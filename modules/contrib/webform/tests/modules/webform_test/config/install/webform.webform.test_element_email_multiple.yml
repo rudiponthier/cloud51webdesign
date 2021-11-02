@@ -1,3 +1,4 @@
+uuid: null
 langcode: en
 status: open
 dependencies:
@@ -27,6 +28,7 @@ elements: |
     '#type': webform_email_multiple
     '#title': email_multiple_three
     '#cardinality': 3
+  
 css: ''
 javascript: ''
 settings:
@@ -214,7 +216,5 @@ handlers:
     status: true
     conditions: {  }
     weight: 1
-    settings:
-      format: yaml
-      submission: false
+    settings: {  }
 variants: {  }

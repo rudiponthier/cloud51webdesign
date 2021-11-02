@@ -1439,15 +1439,15 @@ function webform_update_8071() {
     foreach ($handlers as $handler) {
       if ($handler instanceof RemotePostWebformHandler) {
         $has_remote_post = TRUE;
-        $configuration = $handler->getSettings();
-        foreach ($configuration as $key => $value) {
+        $configuration = $handler->getConfiguration();
+        foreach ($configuration['settings'] as $key => $value) {
           if (isset($settings_mapping[$key])) {
-            $configuration[$settings_mapping[$key]] = $value;
-            unset($configuration[$key]);
+            $configuration['settings'][$settings_mapping[$key]] = $value;
+            unset($configuration['settings'][$key]);
           }
         }
-        $configuration += $handler->defaultConfiguration();
-        $handler->getSettings($configuration);
+        $configuration['settings'] += $handler->defaultConfiguration();
+        $handler->setConfiguration($configuration);
       }
     }
     if ($has_remote_post) {
@@ -1918,10 +1918,12 @@ function webform_update_8100() {
     foreach ($handlers as $handler) {
       if ($handler instanceof RemotePostWebformHandler) {
         $has_handler = TRUE;
-        $settings = $handler->getSettings();
+        $configuration = $handler->getConfiguration();
+        $settings = $configuration['settings'];
         if ($settings['excluded_data']) {
           $settings['excluded_data']['locked'] = 'locked';
-          $handler->setSettings($settings);
+          $configuration['settings'] = $settings;
+          $handler->setConfiguration($configuration);
         }
       }
     }
@@ -4216,11 +4218,4 @@ function webform_update_8622() {
       'warning'
     );
   }
-}
-
-/**
- * Issue #000000: Add support options to help and add-ons.
- */
-function webform_update_8212() {
-  _webform_update_admin_settings();
 }

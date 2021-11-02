@@ -165,13 +165,14 @@ class WebformScheduledEmailManager implements WebformScheduledEmailManagerInterf
     /** @var \Drupal\webform_scheduled_email\Plugin\WebformHandler\ScheduleEmailWebformHandler $handler */
     $handler = $webform->getHandler($handler_id);
 
-    $send = $handler->getSetting('send');
-    if (empty($send)) {
+    $configuration = $handler->getConfiguration();
+    if (empty($configuration['settings']['send'])) {
       return FALSE;
     }
 
     // Get send +/- days.
-    $days = $handler->getSetting('days') ?: 0;
+    $send = $configuration['settings']['send'];
+    $days = (!empty($configuration['settings']['days'])) ? $configuration['settings']['days'] : 0;
 
     // ISSUE:
     // [webform_submission:completed:html_date] token is not being replaced
@@ -213,7 +214,7 @@ class WebformScheduledEmailManager implements WebformScheduledEmailManagerInterf
       $webform = $webform_submission->getWebform();
       /** @var \Drupal\webform_scheduled_email\Plugin\WebformHandler\ScheduleEmailWebformHandler $handler */
       $handler = $webform->getHandler($handler_id);
-      $handler_settings = $handler->getSettings();
+      $handler_configuration = $handler->getConfiguration();
 
       // Check send date and set timestamp.
       $send_iso_date = $this->getSendDate($webform_submission, $handler_id);
@@ -225,13 +226,13 @@ class WebformScheduledEmailManager implements WebformScheduledEmailManagerInterf
 
       // Check submission state and unschedule.
       $state = $webform_submission->getState();
-      if (!in_array($state, $handler_settings['states']) && $handler_settings['unschedule']) {
+      if (!in_array($state, $handler_configuration['settings']['states']) && $handler_configuration['settings']['unschedule']) {
         $this->unschedule($webform_submission, $handler_id);
         return WebformScheduledEmailManagerInterface::EMAIL_UNSCHEDULED;
       }
 
       // Check if action should be triggered in the past.
-      if (!empty($handler_settings['ignore_past']) && $send_timestamp < $this->time->getRequestTime()) {
+      if (!empty($handler_configuration['settings']['ignore_past']) && $send_timestamp < $this->time->getRequestTime()) {
         $this->unschedule($webform_submission, $handler_id);
         return WebformScheduledEmailManagerInterface::EMAIL_IGNORED;
       }
@@ -427,33 +428,24 @@ class WebformScheduledEmailManager implements WebformScheduledEmailManagerInterf
   /**
    * {@inheritdoc}
    */
-  public function delete(EntityInterface $entity, $handler_id = NULL) {
+  public function delete(EntityInterface $entity) {
     if ($entity instanceof WebformSubmissionInterface) {
-      $query = $this->database->delete('webform_scheduled_email')
-        ->condition('sid', $entity->id());
-      if ($handler_id) {
-        $query->condition('handler_id', $handler_id);
-      }
-      $query->execute();
+      $this->database->delete('webform_scheduled_email')
+        ->condition('sid', $entity->id())
+        ->execute();
     }
     elseif ($entity instanceof WebformInterface) {
-      $query = $this->database->delete('webform_scheduled_email')
-        ->condition('webform_id', $entity->id());
-      if ($handler_id) {
-        $query->condition('handler_id', $handler_id);
-      }
-      $query->execute();
+      $this->database->delete('webform_scheduled_email')
+        ->condition('webform_id', $entity->id())
+        ->execute();
     }
 
     // Since webform and submissions can also be used as a source entity,
     // include them in deleting.
-    $query = $this->database->delete('webform_scheduled_email')
+    $this->database->delete('webform_scheduled_email')
       ->condition('entity_type', $entity->getEntityTypeId())
-      ->condition('entity_id', $entity->id());
-    if ($handler_id) {
-      $query->condition('handler_id', $handler_id);
-    }
-    $query->execute();
+      ->condition('entity_id', $entity->id())
+      ->execute();
   }
 
   /****************************************************************************/

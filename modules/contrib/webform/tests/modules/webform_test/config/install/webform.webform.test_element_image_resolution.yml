@@ -1,3 +1,4 @@
+uuid: null
 langcode: en
 status: open
 dependencies:
@@ -25,6 +26,7 @@ elements: |
     '#height_title': '{height_title}'
     '#width_title': '{width_title}'
     '#default_value': 300x400
+  
 css: ''
 javascript: ''
 settings:
@@ -212,7 +214,5 @@ handlers:
     status: true
     conditions: {  }
     weight: 1
-    settings:
-      format: yaml
-      submission: false
+    settings: {  }
 variants: {  }

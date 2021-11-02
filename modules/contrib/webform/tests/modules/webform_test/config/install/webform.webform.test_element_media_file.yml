@@ -1,3 +1,4 @@
+uuid: null
 langcode: en
 status: open
 dependencies:
@@ -71,6 +72,7 @@ elements: |
       '#type': webform_video_file
       '#title': 'video_file (mp4)'
       '#file_extensions': mp4
+  
 css: ''
 javascript: ''
 settings:

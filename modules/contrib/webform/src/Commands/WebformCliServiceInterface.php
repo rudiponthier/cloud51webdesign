@@ -69,6 +69,11 @@ interface WebformCliServiceInterface {
 
   /**
    * Implements drush_hook_COMMAND().
+   */
+  public function drush_webform_libraries_make();
+
+  /**
+   * Implements drush_hook_COMMAND().
    *
    * How to handle module library dependencies #68
    *

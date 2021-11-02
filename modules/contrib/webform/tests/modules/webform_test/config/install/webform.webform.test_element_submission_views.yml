@@ -1,3 +1,4 @@
+uuid: null
 langcode: en
 status: open
 dependencies:
@@ -46,6 +47,7 @@ elements: |
             - entity.webform.results_submissions
           node_routes:
             - entity.node.webform.results_submissions
+  
 css: ''
 javascript: ''
 settings:
@@ -233,7 +235,5 @@ handlers:
     status: true
     conditions: {  }
     weight: 1
-    settings:
-      format: yaml
-      submission: false
+    settings: {  }
 variants: {  }

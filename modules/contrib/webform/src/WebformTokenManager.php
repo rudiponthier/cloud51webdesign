@@ -72,11 +72,7 @@ class WebformTokenManager implements WebformTokenManagerInterface {
     // Removes all HTML tags from the token's value.
     'striptags',
     // URL encodes the token's value.
-    // @see https://www.php.net/manual/en/function.urlencode.php
     'urlencode',
-    // Raw URL encodes the token's value.
-    // @see https://www.php.net/manual/en/function.rawurlencode.php
-    'rawurlencode',
     // XML encodes the token's value.
     'xmlencode',
   ];
@@ -344,7 +340,7 @@ class WebformTokenManager implements WebformTokenManagerInterface {
     }
 
     // Remove all suffixes which are not valid.
-    $pattern = '/\[((?:webform|current-user)[^]]+)((?::' . implode('|:', static::$suffixes) . ')+)\]/';
+    $pattern = '/\[(webform[^]]+)((?::' . implode('|:', static::$suffixes) . ')+)\]/';
     while (preg_match($pattern, $value)) {
       $value = preg_replace($pattern, '[\1]', $value);
     }
@@ -449,9 +445,6 @@ class WebformTokenManager implements WebformTokenManagerInterface {
           // Encode URL.
           if (isset($suffixes['urlencode'])) {
             $replace = urlencode($replace);
-          }
-          if (isset($suffixes['rawurlencode'])) {
-            $replace = rawurlencode($replace);
           }
           // Encode xml.
           if (isset($suffixes['xmlencode'])) {

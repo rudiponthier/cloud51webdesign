@@ -77,8 +77,8 @@ class WebformOptionsLimitAccess {
     $handlers = $webform->getHandlers();
     foreach ($handlers as $handler) {
       if ($handler instanceof WebformOptionsLimitHandlerInterface) {
-        $limit_user = $handler->getSetting('limit_user');
-        if (empty($limit_user)) {
+        $configuration = $handler->getConfiguration();
+        if (empty($configuration['settings']['limit_user'])) {
           return TRUE;
         }
       }

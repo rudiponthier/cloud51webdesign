@@ -1,3 +1,4 @@
+uuid: null
 langcode: en
 status: open
 dependencies:
@@ -59,7 +60,7 @@ elements: |
       '#title': '''webform_name_destination'' same as ''webform_name_source'''
       '#source': webform_name_source
       '#destination': webform_name_destination
-      '#destination_state': visible-slide
+      '#destination_state': 'visible-slide'
       '#default_value': true
     webform_name_destination:
       '#type': webform_name
@@ -88,6 +89,7 @@ elements: |
       '#title': textfield_multiple_destination
       '#multiple': true
       '#required': true
+  
 css: ''
 javascript: ''
 settings:
@@ -275,7 +277,5 @@ handlers:
     status: true
     conditions: {  }
     weight: 1
-    settings:
-      format: yaml
-      submission: false
+    settings: {  }
 variants: {  }

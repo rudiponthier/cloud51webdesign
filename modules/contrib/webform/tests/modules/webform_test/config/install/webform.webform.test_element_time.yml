@@ -1,3 +1,4 @@
+uuid: null
 langcode: en
 status: open
 dependencies:
@@ -67,6 +68,7 @@ elements: |
     '#title': time_timepicker_placeholder
     '#timepicker': true
     '#placeholder': '{time}'
+  
 css: ''
 javascript: ''
 settings:
@@ -254,7 +256,5 @@ handlers:
     status: true
     conditions: {  }
     weight: 1
-    settings:
-      format: yaml
-      submission: false
+    settings: {  }
 variants: {  }

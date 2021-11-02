@@ -1,3 +1,4 @@
+uuid: null
 langcode: en
 status: open
 dependencies:
@@ -156,6 +157,7 @@ elements: |
       '#default_value':
         five: five
         three: three
+  
 css: ''
 javascript: ''
 settings:
@@ -343,7 +345,5 @@ handlers:
     status: true
     conditions: {  }
     weight: 0
-    settings:
-      format: yaml
-      submission: false
+    settings: {  }
 variants: {  }

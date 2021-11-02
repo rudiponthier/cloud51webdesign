@@ -26,7 +26,6 @@ class WebformOptionsLimitSourceEntityTest extends WebformNodeBrowserTestBase {
    * Test options limit source entity.
    */
   public function testSourceEnity() {
-    /** @var \Drupal\webform\WebformInterface $webform */
     $webform = Webform::load('test_handler_options_limit');
     $node = $this->createWebformNode('test_handler_options_limit');
 
@@ -61,8 +60,10 @@ class WebformOptionsLimitSourceEntityTest extends WebformNodeBrowserTestBase {
     $this->purgeSubmissions();
 
     // Disable source entity support for the handler.
-    $webform->getHandler('options_limit_default')
-      ->setSetting('limit_source_entity', FALSE);
+    $handler = $webform->getHandler('options_limit_default');
+    $configuration = $handler->getConfiguration();
+    $configuration['settings']['limit_source_entity'] = FALSE;
+    $handler->setConfiguration($configuration);
     $webform->save();
 
     // Check that the webform node option A and webform option A are both open.

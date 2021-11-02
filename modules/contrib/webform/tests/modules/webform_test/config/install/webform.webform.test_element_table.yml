@@ -1,3 +1,4 @@
+uuid: null
 langcode: en
 status: open
 dependencies:
@@ -192,6 +193,7 @@ elements: |
       table_advanced_04_textfield:
         '#type': textfield
         '#title': 'textfield (4)'
+  
 css: ''
 javascript: ''
 settings:
@@ -379,7 +381,5 @@ handlers:
     status: true
     conditions: {  }
     weight: 0
-    settings:
-      format: yaml
-      submission: false
+    settings: {  }
 variants: {  }

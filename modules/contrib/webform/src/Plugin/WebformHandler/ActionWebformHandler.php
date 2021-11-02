@@ -45,7 +45,8 @@ class ActionWebformHandler extends WebformHandlerBase {
    * {@inheritdoc}
    */
   public function getSummary() {
-    $settings = $this->getSettings();
+    $configuration = $this->getConfiguration();
+    $settings = $configuration['settings'];
 
     // Get state labels.
     $states = [

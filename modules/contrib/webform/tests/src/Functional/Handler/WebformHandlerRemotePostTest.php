@@ -38,8 +38,6 @@ class WebformHandlerRemotePostTest extends WebformBrowserTestBase {
    * Test remote post handler.
    */
   public function testRemotePostHandler() {
-    global $base_url;
-
     $this->drupalLogin($this->rootUser);
 
     /**************************************************************************/
@@ -133,10 +131,12 @@ options:
     $this->assertNoRaw('Unable to process this submission. Please contact the site administrator.');
 
     // Check excluded data.
-    $webform->getHandler('remote_post')
-      ->setSetting('excluded_data', [
-        'last_name' => 'last_name',
-      ]);
+    $handler = $webform->getHandler('remote_post');
+    $configuration = $handler->getConfiguration();
+    $configuration['settings']['excluded_data'] = [
+      'last_name' => 'last_name',
+    ];
+    $handler->setConfiguration($configuration);
     $webform->save();
     $sid = $this->postSubmission($webform);
     $this->assertRaw('first_name: John');
@@ -157,7 +157,9 @@ options:
 
     // Check default custom response message.
     $handler = $webform->getHandler('remote_post');
-    $handler->setSetting('message', 'This is a custom response message');
+    $configuration = $handler->getConfiguration();
+    $configuration['settings']['message'] = 'This is a custom response message';
+    $handler->setConfiguration($configuration);
     $webform->save();
     $this->postSubmission($webform, ['response_type' => '500']);
     $this->assertRaw('Failed to process completed request.');
@@ -202,7 +204,9 @@ options:
 
     // Set remote post error URL to homepage.
     $handler = $webform->getHandler('remote_post');
-    $handler->setSetting('error_url', $webform->toUrl('canonical', ['query' => ['error' => '1']])->toString());
+    $configuration = $handler->getConfiguration();
+    $configuration['settings']['error_url'] = $webform->toUrl('canonical', ['query' => ['error' => '1']])->toString();
+    $handler->setConfiguration($configuration);
     $webform->save();
 
     // Check 404 Not Found with custom error uri.
@@ -308,20 +312,6 @@ options:
     /** @var \Drupal\webform\WebformInterface $webform */
     $webform = Webform::load('test_handler_remote_post_cast');
 
-    $this->postSubmission($webform);
-    $this->assertRaw("form_params:
-  boolean_true: true
-  integer: 100
-  float: 100.01
-  checkbox: false
-  number: ''
-  number_multiple: {  }
-  custom_composite:
-    -
-      textfield: ''
-      number: !!float 0
-      checkbox: false");
-
     $edit = [
       'checkbox' => TRUE,
       'number' => '10',
@@ -344,17 +334,6 @@ options:
       textfield: text
       checkbox: true
       number: 20.5");
-
-    /**************************************************************************/
-    // POST error.
-    /**************************************************************************/
-
-    /** @var \Drupal\webform\WebformInterface $webform */
-    $webform = Webform::load('test_handler_remote_post_error');
-
-    $this->postSubmission($webform);
-
-    $this->assertEqual($base_url . '/error_url', $this->getUrl());
   }
 
 }

@@ -1,3 +1,4 @@
+uuid: null
 langcode: en
 status: open
 dependencies:
@@ -74,7 +75,8 @@ elements: |
       '#type': webform_element_options
       '#title': webform_element_options_custom_type_multiple
       '#custom__type': webform_multiple
-      '#default_value': {  }
+      '#default_value': { }
+  
 css: ''
 javascript: ''
 settings:
@@ -262,7 +264,5 @@ handlers:
     status: true
     conditions: {  }
     weight: 0
-    settings:
-      format: yaml
-      submission: false
+    settings: {  }
 variants: {  }

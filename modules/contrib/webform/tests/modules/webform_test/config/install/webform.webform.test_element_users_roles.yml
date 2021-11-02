@@ -1,3 +1,4 @@
+uuid: null
 langcode: en
 status: open
 dependencies:
@@ -32,6 +33,7 @@ elements: |
     '#include_anonymous': false
     '#default_value':
       authenticated: authenticated
+  
 css: ''
 javascript: ''
 settings:
@@ -219,7 +221,5 @@ handlers:
     status: true
     conditions: {  }
     weight: 0
-    settings:
-      format: yaml
-      submission: false
+    settings: {  }
 variants: {  }

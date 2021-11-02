@@ -34,8 +34,6 @@ class WebformElementInputMaskTest extends WebformElementBrowserTestBase {
     // Check default values.
     $this->postSubmission($webform);
     $this->assertRaw("currency: '$ 1.00'
-currency_negative: '-$ 1.00'
-currency_positive_negative: '$ 1.00'
 datetime: ''
 decimal: ''
 email: ''
@@ -59,8 +57,6 @@ module: ''");
       'decimal' => '9.9',
       'ip' => '255.255.255.255',
       'currency' => '$ 9.99',
-      'currency_negative' => '-$ 9.99',
-      'currency_positive_negative' => '-$ 9.99',
       'percentage' => '99 %',
       'phone' => '(999) 999-9999',
       'license_plate' => '9-AAA-999',
@@ -74,8 +70,6 @@ module: ''");
     ];
     $this->postSubmission($webform, $edit);
     $this->assertRaw("currency: '$ 9.99'
-currency_negative: '-$ 9.99'
-currency_positive_negative: '-$ 9.99'
 datetime: '2007-06-09''T''17:46:21'
 decimal: '9.9'
 email: example@example.com
@@ -95,8 +89,6 @@ module: '999'");
     // Check pattern validation error messages.
     $edit = [
       'currency' => '$ 9.9_',
-      'currency_negative' => '-$ 9.9_',
-      'currency_positive_negative' => '-$ 9.9_',
       'decimal' => '9._',
       'ip' => '255.255.255.__',
       'mac' => '99-99-99-99-99-_)',

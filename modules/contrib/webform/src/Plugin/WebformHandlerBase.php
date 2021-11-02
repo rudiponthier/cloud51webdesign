@@ -26,7 +26,6 @@ abstract class WebformHandlerBase extends PluginBase implements WebformHandlerIn
 
   use WebformEntityInjectionTrait;
   use WebformEntityStorageTrait;
-  use WebformPluginSettingsTrait;
 
   /**
    * The webform.
@@ -516,11 +515,6 @@ abstract class WebformHandlerBase extends PluginBase implements WebformHandlerIn
   /****************************************************************************/
   // Submission form methods.
   /****************************************************************************/
-
-  /**
-   * {@inheritdoc}
-   */
-  public function prepareForm(WebformSubmissionInterface $webform_submission, $operation, FormStateInterface $form_state) {}
 
   /**
    * {@inheritdoc}

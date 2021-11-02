@@ -60,14 +60,13 @@ class WebformHandlerEmailAdvancedTest extends WebformBrowserTestBase {
     $this->assertEqual($sent_email['params']['custom_parameter'], 'test');
     $this->assertArrayNotHasKey('parameters', $sent_email['params']);
 
-    $webform
-      ->getHandler('email')
-      ->setSettings([
-        'reply_to' => '',
-        'return_path' => '',
-        'sender_mail' => '',
-        'sender_name' => '',
-      ]);
+    $email_handler = $webform->getHandler('email');
+    $configuration = $email_handler->getConfiguration();
+    $configuration['settings']['reply_to'] = '';
+    $configuration['settings']['return_path'] = '';
+    $configuration['settings']['sender_mail'] = '';
+    $configuration['settings']['sender_name'] = '';
+    $email_handler->setConfiguration($configuration);
     $webform->save();
 
     // Check no custom reply to and return path.
@@ -169,7 +168,9 @@ class WebformHandlerEmailAdvancedTest extends WebformBrowserTestBase {
     $email_handler = $webform->getHandler('email');
 
     // Exclude file attachment.
-    $email_handler->setSetting('exclude_attachments', TRUE);
+    $configuration = $email_handler->getConfiguration();
+    $configuration['settings']['exclude_attachments'] = TRUE;
+    $email_handler->setConfiguration($configuration);
     $webform->save();
 
     // Check excluding attachments.
@@ -179,7 +180,9 @@ class WebformHandlerEmailAdvancedTest extends WebformBrowserTestBase {
     $this->assertArrayHasKey('filecontent', $sent_email['params']['attachments'][0]);
 
     // Exclude file element.
-    $email_handler->setSetting('excluded_elements', ['file' => 'file']);
+    $configuration = $email_handler->getConfiguration();
+    $configuration['settings']['excluded_elements'] = ['file' => 'file'];
+    $email_handler->setConfiguration($configuration);
     $webform->save();
 
     // Check excluding files.
@@ -194,10 +197,10 @@ class WebformHandlerEmailAdvancedTest extends WebformBrowserTestBase {
     $this->assertStringNotContainsString('<b>Optional</b><br />{Empty}<br /><br />', $sent_email['params']['body']);
 
     // Include empty.
-    $email_handler->setSettings([
-      'exclude_empty' => FALSE,
-      'exclude_empty_checkbox' => FALSE
-    ]);
+    $configuration = $email_handler->getConfiguration();
+    $configuration['settings']['exclude_empty'] = FALSE;
+    $configuration['settings']['exclude_empty_checkbox'] = FALSE;
+    $email_handler->setConfiguration($configuration);
     $webform->save();
 
     // Check empty included.
@@ -215,8 +218,10 @@ class WebformHandlerEmailAdvancedTest extends WebformBrowserTestBase {
     $this->assertStringContainsString('<b>Notes</b><br />These notes are private.<br /><br />', $sent_email['params']['body']);
 
     // Disable ignore_access.
-    $webform->getHandler('email')
-      ->setSetting('ignore_access', FALSE);
+    $email_handler = $webform->getHandler('email');
+    $configuration = $email_handler->getConfiguration();
+    $configuration['settings']['ignore_access'] = FALSE;
+    $email_handler->setConfiguration($configuration);
     $webform->save();
 
     // Check that private is excluded from email because 'ignore_access' is FALSE.

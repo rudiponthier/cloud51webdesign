@@ -1,3 +1,4 @@
+uuid: null
 langcode: en
 status: open
 dependencies:
@@ -17,6 +18,7 @@ category: 'Test: Confirmation'
 elements: |
   description:
     '#markup': 'This webform will redirect to the homepage when submitted.'
+  
 css: ''
 javascript: ''
 settings:

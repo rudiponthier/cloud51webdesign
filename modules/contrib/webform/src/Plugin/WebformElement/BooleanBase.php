@@ -50,15 +50,6 @@ abstract class BooleanBase extends WebformElementBase {
   /**
    * {@inheritdoc}
    */
-  public function getItemFormats() {
-    $formats = parent::getItemFormats();
-    $formats['raw'] = $this->t('Raw/return value');
-    return $formats;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function getTestValues(array $element, WebformInterface $webform, array $options = []) {
     return TRUE;
   }

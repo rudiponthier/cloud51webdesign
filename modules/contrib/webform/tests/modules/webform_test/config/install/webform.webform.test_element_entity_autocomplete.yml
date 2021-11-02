@@ -1,3 +1,4 @@
+uuid: null
 langcode: en
 status: open
 dependencies:
@@ -85,6 +86,7 @@ elements: |
       auto_create: true
       auto_create_bundle: tags
     '#default_value': 1
+  
 css: ''
 javascript: ''
 settings:
@@ -272,7 +274,5 @@ handlers:
     status: true
     conditions: {  }
     weight: 0
-    settings:
-      format: yaml
-      submission: false
+    settings: {  }
 variants: {  }
